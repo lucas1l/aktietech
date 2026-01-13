@@ -3,106 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Stock Site</title>
+    <title>Stock Trader Pro</title>
     <link rel="stylesheet" href="style.css">
-    <!-- ADD THIS LINE FOR CHARTS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- HEADER WITH CONTROLS -->
+    <!-- HEADER -->
     <header>
         <div class="header-top">
-            <h1>📈 Stocks</h1>
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <h1>Stock Trader <span class="logo-highlight">Pro</span></h1>
+            </div>
             <div class="header-controls">
                 <button id="theme-toggle" class="theme-btn" title="Toggle dark mode">
-                    🌙 Dark Mode
+                    <i class="fas fa-moon"></i> Dark Mode
+                </button>
+                <button id="profile-btn" class="theme-btn" title="Your Profile">
+                    <i class="fas fa-user"></i>
                 </button>
             </div>
         </div>
-        
-        <!-- SEARCH BAR -->
-        <div class="search-container">
-            <input 
-                type="text" 
-                id="search" 
-                placeholder="Search stocks (AAPL, TSLA, MSFT...)" 
-                autocomplete="off"
-            >
-            <div id="search-info"></div>
-        </div>
     </header>
-    
-    <!-- GAME HEADER - Add this after the header but before main -->
-    <div class="game-header">
-        <div class="player-stats">
-            <div class="stat">
-                <span class="stat-label">💰 Balance</span>
+
+    <!-- GAME DASHBOARD -->
+    <div class="game-dashboard">
+        <!-- Quick Stats Bar -->
+        <div class="quick-stats">
+            <div class="stat-item">
+                <span class="stat-label"><i class="fas fa-wallet"></i> Balance</span>
                 <span id="player-balance" class="stat-value">$10,000.00</span>
             </div>
-            <div class="stat">
-                <span class="stat-label">📈 Portfolio Value</span>
+            <div class="stat-item">
+                <span class="stat-label"><i class="fas fa-chart-bar"></i> Portfolio</span>
                 <span id="portfolio-value" class="stat-value">$10,000.00</span>
             </div>
-            <div class="stat">
-                <span class="stat-label">📊 Today's P/L</span>
-                <span id="daily-change" class="stat-value up">+$0.00 (0.00%)</span>
-            </div>
-            <div class="stat">
-                <span class="stat-label">🏆 Rank</span>
+            <div class="stat-item">
+                <span class="stat-label"><i class="fas fa-trophy"></i> Rank</span>
                 <span id="player-rank" class="stat-value">#1</span>
             </div>
-        </div>
-        
-        <div class="game-controls">
-            <button id="buy-btn" class="game-btn" disabled>🛒 Buy</button>
-            <button id="sell-btn" class="game-btn" disabled>💰 Sell</button>
-            <button id="portfolio-btn" class="game-btn">📊 Portfolio</button>
-            <button id="leaderboard-btn" class="game-btn">🏆 Leaderboard</button>
-        </div>
-    </div>
-    
-    <!-- GAME TICKER - Add this right after game-header -->
-    <div class="game-ticker">
-        <div class="ticker-tape">
-            <div class="news-ticker-content">
-                🎮 Welcome to Stock Trader Challenge! Start with $10,000. • 
-                📈 Goal: Beat the market! • 
-                🏆 Compete with friends •
-                💰 Trade real stocks with virtual money
+            <div class="stat-item">
+                <span class="stat-label"><i class="fas fa-level-up-alt"></i> Level</span>
+                <span id="player-level" class="stat-value">1</span>
             </div>
         </div>
-        
-        <div class="achievements">
-            <div class="achievement-badge unlocked" title="New Player - Just joined!">
-                🆕
-            </div>
-            <div class="achievement-badge locked" title="First Trade - Make your first trade">
-                🔒
-            </div>
-            <div class="achievement-badge locked" title="Day Trader - 10 trades in one day">
-                🔒
-            </div>
+
+        <!-- Main Game Tabs -->
+        <div class="game-tabs">
+            <button class="game-tab active" data-tab="market">
+                <i class="fas fa-chart-line"></i> Market
+            </button>
+            <button class="game-tab" data-tab="portfolio">
+                <i class="fas fa-briefcase"></i> Portfolio
+            </button>
+            <button class="game-tab" data-tab="trading">
+                <i class="fas fa-exchange-alt"></i> Trading
+            </button>
+            <button class="game-tab" data-tab="leaderboard">
+                <i class="fas fa-trophy"></i> Leaderboard
+            </button>
+            <button class="game-tab" data-tab="achievements">
+                <i class="fas fa-medal"></i> Achievements
+            </button>
         </div>
     </div>
-    
-    <!-- MAIN CONTENT -->
-    <main>
-        <!-- LOADING INDICATOR -->
+
+    <!-- MARKET TAB (Default/Active) -->
+    <main class="tab-content active" id="market-tab">
+        <!-- SEARCH BAR -->
+        <div class="search-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input 
+                    type="text" 
+                    id="search" 
+                    placeholder="Search stocks (AAPL, TSLA, MSFT...)" 
+                    autocomplete="off"
+                >
+            </div>
+            <div id="search-info"></div>
+        </div>
+
+        <!-- LOADING -->
         <div id="loading">
             <div class="loader"></div>
             <p>Loading stock data...</p>
         </div>
-        
+
         <!-- STOCK TABLE -->
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th onclick="sortTable('symbol')">Symbol ↗</th>
-                        <th onclick="sortTable('price')">Price ↗</th>
-                        <th onclick="sortTable('change')">Change ↗</th>
-                        <th onclick="sortTable('percent')">% Change ↗</th>
-                        <th>Fav</th>
+                        <th onclick="sortTable('symbol')">Symbol <i class="fas fa-sort"></i></th>
+                        <th onclick="sortTable('price')">Price <i class="fas fa-sort"></i></th>
+                        <th onclick="sortTable('change')">Change <i class="fas fa-sort"></i></th>
+                        <th onclick="sortTable('percent')">% <i class="fas fa-sort"></i></th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="stock-table">
@@ -110,85 +108,271 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- NEWS TICKER -->
+        <div class="news-ticker">
+            <div class="ticker-label">
+                <i class="fas fa-bullhorn"></i> Market News
+            </div>
+            <div class="ticker-content">
+                <span id="news-ticker-text">Loading market news...</span>
+            </div>
+        </div>
     </main>
 
-    <!-- FOOTER INFO -->
-    <footer class="footer">
-        <p>Data provided by Finnhub • Updated in real-time</p>
-        <p class="small">Showing <span id="stock-count">0</span> stocks • <span id="last-updated">--:--</span></p>
-    </footer>
+    <!-- PORTFOLIO TAB -->
+    <main class="tab-content" id="portfolio-tab">
+        <div class="portfolio-header">
+            <h2><i class="fas fa-briefcase"></i> Your Portfolio</h2>
+            <div class="portfolio-summary">
+                <div class="summary-card">
+                    <div class="summary-label">Total Value</div>
+                    <div class="summary-value" id="portfolio-total">$10,000.00</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Today's P/L</div>
+                    <div class="summary-value up" id="portfolio-daily">+$0.00</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Total Profit</div>
+                    <div class="summary-value" id="portfolio-profit">$0.00</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Total Trades</div>
+                    <div class="summary-value" id="portfolio-trades">0</div>
+                </div>
+            </div>
+        </div>
 
-    <!-- DETAILS PANEL (SLIDES IN FROM RIGHT) -->
+        <div class="portfolio-content">
+            <div class="holdings-container">
+                <h3><i class="fas fa-boxes"></i> Current Holdings</h3>
+                <div class="holdings-grid" id="holdings-list">
+                    <!-- Holdings will be populated by JavaScript -->
+                    <div class="empty-portfolio">
+                        <i class="fas fa-chart-pie fa-3x"></i>
+                        <p>No holdings yet</p>
+                        <p class="small">Buy stocks to build your portfolio!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-trades">
+                <h3><i class="fas fa-history"></i> Recent Trades</h3>
+                <div class="trades-list" id="recent-trades">
+                    <!-- Trades will be populated by JavaScript -->
+                    <div class="empty-trades">
+                        <i class="fas fa-exchange-alt fa-2x"></i>
+                        <p>No trades yet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- TRADING TAB -->
+    <main class="tab-content" id="trading-tab">
+        <div class="trading-container">
+            <div class="trading-header">
+                <h2><i class="fas fa-exchange-alt"></i> Trade Stocks</h2>
+                <div class="trading-info">
+                    <p>Select a stock from the market tab to start trading</p>
+                </div>
+            </div>
+
+            <div class="trading-panel">
+                <div class="selected-stock" id="selected-stock-display">
+                    <div class="no-stock-selected">
+                        <i class="fas fa-search fa-3x"></i>
+                        <p>No stock selected</p>
+                        <p class="small">Click on a stock in the Market tab to select it</p>
+                    </div>
+                </div>
+
+                <div class="trading-controls">
+                    <div class="trade-type">
+                        <button class="trade-type-btn active" data-type="buy">
+                            <i class="fas fa-shopping-cart"></i> Buy
+                        </button>
+                        <button class="trade-type-btn" data-type="sell">
+                            <i class="fas fa-money-bill-wave"></i> Sell
+                        </button>
+                    </div>
+
+                    <div class="quantity-selector">
+                        <label for="trade-quantity">Quantity:</label>
+                        <div class="quantity-controls">
+                            <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                            <input type="number" id="trade-quantity" value="1" min="1" max="1000">
+                            <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="trade-summary">
+                        <div class="summary-row">
+                            <span>Price per share:</span>
+                            <span id="trade-price">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Quantity:</span>
+                            <span id="trade-qty-display">1</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="trade-subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Fee:</span>
+                            <span id="trade-fee">$4.99</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="trade-total">$4.99</span>
+                        </div>
+                    </div>
+
+                    <button id="execute-trade" class="trade-btn" disabled>
+                        <i class="fas fa-play-circle"></i> Execute Trade
+                    </button>
+                </div>
+            </div>
+
+            <div class="trading-history">
+                <h3><i class="fas fa-clock"></i> Quick Trade History</h3>
+                <div id="quick-trade-history">
+                    <!-- Will show last few trades -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- LEADERBOARD TAB -->
+    <main class="tab-content" id="leaderboard-tab">
+        <div class="leaderboard-container">
+            <div class="leaderboard-header">
+                <h2><i class="fas fa-trophy"></i> Global Leaderboard</h2>
+                <div class="leaderboard-filters">
+                    <button class="filter-btn active">All Time</button>
+                    <button class="filter-btn">This Week</button>
+                    <button class="filter-btn">Today</button>
+                </div>
+            </div>
+
+            <div class="leaderboard-content">
+                <div class="top-three">
+                    <div class="podium second">
+                        <div class="podium-rank">2</div>
+                        <div class="podium-name">StockGuru</div>
+                        <div class="podium-value">$11,500</div>
+                    </div>
+                    <div class="podium first">
+                        <div class="podium-rank">1</div>
+                        <div class="podium-name">WallStreetWolf</div>
+                        <div class="podium-value">$12,800</div>
+                    </div>
+                    <div class="podium third">
+                        <div class="podium-rank">3</div>
+                        <div class="podium-name">BullMarket</div>
+                        <div class="podium-value">$10,900</div>
+                    </div>
+                </div>
+
+                <div class="leaderboard-list" id="leaderboard-table">
+                    <!-- Leaderboard entries will be populated by JavaScript -->
+                </div>
+
+                <div class="your-position">
+                    <h3><i class="fas fa-user"></i> Your Position</h3>
+                    <div class="position-card">
+                        <div class="position-rank">#<span id="your-rank">1</span></div>
+                        <div class="position-info">
+                            <div class="position-name">You</div>
+                            <div class="position-value">$<span id="your-value">10,000</span></div>
+                        </div>
+                        <div class="position-change">
+                            <span class="up"><i class="fas fa-arrow-up"></i> +0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ACHIEVEMENTS TAB -->
+    <main class="tab-content" id="achievements-tab">
+        <div class="achievements-container">
+            <div class="achievements-header">
+                <h2><i class="fas fa-medal"></i> Achievements</h2>
+                <div class="achievements-summary">
+                    <div class="summary-card">
+                        <div class="summary-label">Unlocked</div>
+                        <div class="summary-value" id="achievements-unlocked">1/12</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Total XP</div>
+                        <div class="summary-value" id="total-xp">50</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Level</div>
+                        <div class="summary-value" id="achievements-level">1</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="achievements-grid" id="achievements-list">
+                <!-- Achievements will be populated by JavaScript -->
+            </div>
+
+            <div class="xp-progress">
+                <h3><i class="fas fa-chart-line"></i> Progress to Next Level</h3>
+                <div class="xp-bar-container">
+                    <div class="xp-bar">
+                        <div class="xp-fill" id="xp-fill" style="width: 10%"></div>
+                    </div>
+                    <div class="xp-text">
+                        <span id="current-xp">50</span> / <span id="next-level-xp">500</span> XP
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- DETAILS PANEL -->
     <div id="details-panel" class="details-panel">
         <div class="panel-header">
             <h2 id="panel-title">Stock Details</h2>
-            <button id="close-panel" class="close-btn">×</button>
+            <button id="close-panel" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         
         <div class="panel-content">
-            <!-- PRICE SUMMARY -->
-            <div class="detail-section">
-                <div class="detail-row">
-                    <span>Current Price:</span>
-                    <span id="detail-price" class="detail-value">--</span>
-                </div>
-                <div class="detail-row">
-                    <span>Change:</span>
-                    <span id="detail-change" class="detail-value">--</span>
-                </div>
-                <div class="detail-row">
-                    <span>% Change:</span>
-                    <span id="detail-percent" class="detail-value">--</span>
-                </div>
-                <div class="detail-row">
-                    <span>Day High:</span>
-                    <span id="detail-high" class="detail-value">--</span>
-                </div>
-                <div class="detail-row">
-                    <span>Day Low:</span>
-                    <span id="detail-low" class="detail-value">--</span>
-                </div>
-                <div class="detail-row">
-                    <span>Open:</span>
-                    <span id="detail-open" class="detail-value">--</span>
-                </div>
-                <div class="detail-row">
-                    <span>Previous Close:</span>
-                    <span id="detail-prev" class="detail-value">--</span>
-                </div>
+            <!-- Content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- PROFILE MODAL -->
+    <div id="profile-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user"></i> Your Profile</h3>
+                <button class="close-modal-btn close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            
-            <!-- CHART SECTION -->
-            <div class="detail-section">
-                <h3>Price Chart</h3>
-                <div class="chart-container">
-                    <canvas id="stock-chart"></canvas>
-                </div>
-                <div class="chart-controls">
-                    <button class="chart-btn active" data-period="1D">1 Day</button>
-                    <button class="chart-btn" data-period="1W">1 Week</button>
-                    <button class="chart-btn" data-period="1M">1 Month</button>
-                </div>
-            </div>
-            
-            <!-- NEWS SECTION - ADD THIS -->
-            <div class="detail-section">
-                <h3>Latest News</h3>
-                <div id="news-list" class="news-list">
-                    <div class="news-loading">Loading news...</div>
-                </div>
-            </div>
-            
-            <!-- QUICK ACTIONS -->
-            <div class="detail-section">
-                <h3>Quick Actions</h3>
-                <button id="favorite-btn" class="action-btn">⭐ Add to Favorites</button>
-                <button id="refresh-btn" class="action-btn">🔄 Refresh Data</button>
+            <div class="modal-body" id="profile-content">
+                <!-- Profile content will be populated by JavaScript -->
             </div>
         </div>
     </div>
 
-    <!-- OVERLAY WHEN PANEL IS OPEN -->
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p><i class="fas fa-info-circle"></i> Stock Trader Pro - Virtual Trading Game</p>
+        <p class="small">Data updates every 30 seconds • <span id="last-updated">--:--</span></p>
+    </footer>
+
+    <!-- OVERLAY -->
     <div id="overlay" class="overlay"></div>
 
     <script src="script.js"></script>
