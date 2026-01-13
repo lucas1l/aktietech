@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Details</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stock.css">
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav class="stock-nav">
+        <a href="/" class="back-button">← Back to All Stocks</a>
+        <h1 id="stock-title">Loading...</h1>
+    </nav>
+    
+    <!-- MAIN CONTENT -->
+    <div class="stock-container">
+        <!-- PRICE SUMMARY -->
+        <div class="price-summary">
+            <div class="current-price">
+                <span class="price" id="current-price">--</span>
+                <span class="change" id="price-change">--</span>
+            </div>
+            <div class="price-details">
+                <div>High: <span id="day-high">--</span></div>
+                <div>Low: <span id="day-low">--</span></div>
+                <div>Open: <span id="day-open">--</span></div>
+                <div>Previous Close: <span id="prev-close">--</span></div>
+            </div>
+        </div>
+        
+        <!-- CHART PLACEHOLDER -->
+        <div class="chart-container">
+            <h3>Price Chart</h3>
+            <div class="chart-placeholder" id="chart">
+                <p>Chart loading...</p>
+            </div>
+        </div>
+        
+        <!-- COMPANY INFO -->
+        <div class="company-info">
+            <h3>Company Information</h3>
+            <div class="info-grid" id="company-details">
+                <div>Market Cap: <span>--</span></div>
+                <div>Volume: <span>--</span></div>
+                <div>Exchange: <span>--</span></div>
+                <div>Currency: <span>--</span></div>
+            </div>
+        </div>
+        
+        <!-- NEWS SECTION -->
+        <div class="news-section">
+            <h3>Latest News</h3>
+            <div id="news-list">
+                <div class="news-item">Loading news...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="stock.js"></script>
+</body>
+</html>

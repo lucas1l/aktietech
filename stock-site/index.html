@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Stock Site</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- ADD THIS LINE FOR CHARTS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- HEADER WITH CONTROLS -->
+    <header>
+        <div class="header-top">
+            <h1>📈 Stocks</h1>
+            <div class="header-controls">
+                <button id="theme-toggle" class="theme-btn" title="Toggle dark mode">
+                    🌙 Dark Mode
+                </button>
+            </div>
+        </div>
+        
+        <!-- SEARCH BAR -->
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="search" 
+                placeholder="Search stocks (AAPL, TSLA, MSFT...)" 
+                autocomplete="off"
+            >
+            <div id="search-info"></div>
+        </div>
+    </header>
+    
+    <!-- GAME HEADER - Add this after the header but before main -->
+    <div class="game-header">
+        <div class="player-stats">
+            <div class="stat">
+                <span class="stat-label">💰 Balance</span>
+                <span id="player-balance" class="stat-value">$10,000.00</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">📈 Portfolio Value</span>
+                <span id="portfolio-value" class="stat-value">$10,000.00</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">📊 Today's P/L</span>
+                <span id="daily-change" class="stat-value up">+$0.00 (0.00%)</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">🏆 Rank</span>
+                <span id="player-rank" class="stat-value">#1</span>
+            </div>
+        </div>
+        
+        <div class="game-controls">
+            <button id="buy-btn" class="game-btn" disabled>🛒 Buy</button>
+            <button id="sell-btn" class="game-btn" disabled>💰 Sell</button>
+            <button id="portfolio-btn" class="game-btn">📊 Portfolio</button>
+            <button id="leaderboard-btn" class="game-btn">🏆 Leaderboard</button>
+        </div>
+    </div>
+    
+    <!-- GAME TICKER - Add this right after game-header -->
+    <div class="game-ticker">
+        <div class="ticker-tape">
+            <marquee id="news-ticker">
+                🎮 Welcome to Stock Trader Challenge! Start with $10,000. • 
+                📈 Goal: Beat the market! • 
+                🏆 Compete with friends •
+                💰 Trade real stocks with virtual money
+            </marquee>
+        </div>
+        
+        <div class="achievements">
+            <div class="achievement-badge unlocked" title="New Player - Just joined!">
+                🆕
+            </div>
+            <div class="achievement-badge locked" title="First Trade - Make your first trade">
+                🔒
+            </div>
+            <div class="achievement-badge locked" title="Day Trader - 10 trades in one day">
+                🔒
+            </div>
+        </div>
+    </div>
+    
+    <!-- MAIN CONTENT -->
+    <main>
+        <!-- LOADING INDICATOR -->
+        <div id="loading">
+            <div class="loader"></div>
+            <p>Loading stock data...</p>
+        </div>
+        
+        <!-- STOCK TABLE -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('symbol')">Symbol ↗</th>
+                        <th onclick="sortTable('price')">Price ↗</th>
+                        <th onclick="sortTable('change')">Change ↗</th>
+                        <th onclick="sortTable('percent')">% Change ↗</th>
+                        <th>Fav</th>
+                    </tr>
+                </thead>
+                <tbody id="stock-table">
+                    <!-- JavaScript adds rows here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- FOOTER INFO -->
+    <footer class="footer">
+        <p>Data provided by Finnhub • Updated in real-time</p>
+        <p class="small">Showing <span id="stock-count">0</span> stocks • <span id="last-updated">--:--</span></p>
+    </footer>
+
+    <!-- DETAILS PANEL (SLIDES IN FROM RIGHT) -->
+    <div id="details-panel" class="details-panel">
+        <div class="panel-header">
+            <h2 id="panel-title">Stock Details</h2>
+            <button id="close-panel" class="close-btn">×</button>
+        </div>
+        
+        <div class="panel-content">
+            <!-- PRICE SUMMARY -->
+            <div class="detail-section">
+                <div class="detail-row">
+                    <span>Current Price:</span>
+                    <span id="detail-price" class="detail-value">--</span>
+                </div>
+                <div class="detail-row">
+                    <span>Change:</span>
+                    <span id="detail-change" class="detail-value">--</span>
+                </div>
+                <div class="detail-row">
+                    <span>% Change:</span>
+                    <span id="detail-percent" class="detail-value">--</span>
+                </div>
+                <div class="detail-row">
+                    <span>Day High:</span>
+                    <span id="detail-high" class="detail-value">--</span>
+                </div>
+                <div class="detail-row">
+                    <span>Day Low:</span>
+                    <span id="detail-low" class="detail-value">--</span>
+                </div>
+                <div class="detail-row">
+                    <span>Open:</span>
+                    <span id="detail-open" class="detail-value">--</span>
+                </div>
+                <div class="detail-row">
+                    <span>Previous Close:</span>
+                    <span id="detail-prev" class="detail-value">--</span>
+                </div>
+            </div>
+            
+            <!-- CHART SECTION -->
+            <div class="detail-section">
+                <h3>Price Chart</h3>
+                <div class="chart-container">
+                    <canvas id="stock-chart"></canvas>
+                </div>
+                <div class="chart-controls">
+                    <button class="chart-btn active" data-period="1D">1 Day</button>
+                    <button class="chart-btn" data-period="1W">1 Week</button>
+                    <button class="chart-btn" data-period="1M">1 Month</button>
+                </div>
+            </div>
+            
+            <!-- NEWS SECTION - ADD THIS -->
+            <div class="detail-section">
+                <h3>Latest News</h3>
+                <div id="news-list" class="news-list">
+                    <div class="news-loading">Loading news...</div>
+                </div>
+            </div>
+            
+            <!-- QUICK ACTIONS -->
+            <div class="detail-section">
+                <h3>Quick Actions</h3>
+                <button id="favorite-btn" class="action-btn">⭐ Add to Favorites</button>
+                <button id="refresh-btn" class="action-btn">🔄 Refresh Data</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- OVERLAY WHEN PANEL IS OPEN -->
+    <div id="overlay" class="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
