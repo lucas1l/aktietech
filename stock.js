@@ -10,9 +10,8 @@ let stockData = null;
 
 async function loadStockDetails() {
     try {
-        // Load quote data
-        const quoteRes = await fetch(`/.netlify/functions/finnhub?symbol=${symbol}`);
-        const quoteData = await quoteRes.json();
+        // Load quote data using the API module
+        const quoteData = await window.finnhubAPI.getStockQuote(symbol);
         
         if (!quoteData || typeof quoteData.c !== 'number') {
             throw new Error('Invalid stock data');
@@ -21,15 +20,23 @@ async function loadStockDetails() {
         stockData = quoteData;
         updateStockDisplay();
         
-        // Load company profile (we'll enhance this later)
-        // loadCompanyProfile();
-        
-        // Load news (we'll enhance this later)
-        // loadStockNews();
+        // Load company news
+        loadStockNews();
         
     } catch (error) {
         console.error('Error loading stock details:', error);
         document.getElementById('current-price').textContent = 'Error loading data';
+    }
+}
+
+async function loadStockNews() {
+    try {
+        const news = await window.finnhubAPI.getStockNews(symbol);
+        updateNewsDisplay(news);
+    } catch (error) {
+        console.error('Error loading news:', error);
+        document.getElementById('news-list').innerHTML = 
+            '<div class="news-item">Unable to load news at this time</div>';
     }
 }
 
@@ -60,6 +67,23 @@ function updateStockDisplay() {
     
     // Update title
     document.getElementById('stock-title').textContent = `${symbol} - $${price}`;
+}
+
+function updateNewsDisplay(news) {
+    const newsList = document.getElementById('news-list');
+    
+    if (!news || news.length === 0) {
+        newsList.innerHTML = '<div class="news-item">No news available</div>';
+        return;
+    }
+    
+    newsList.innerHTML = news.map(item => `
+        <div class="news-item">
+            <h4>${item.headline}</h4>
+            <p>${item.summary}</p>
+            ${item.url !== '#' ? `<a href="${item.url}" target="_blank" rel="noopener">Read more</a>` : ''}
+        </div>
+    `).join('');
 }
 
 // Load stock details on page load

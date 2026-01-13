@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
         updateInterval: 30000,
         chartDays: 30
     };
+        // ========== API CONFIGURATION ==========
+    const API_CONFIG = {
+        useRealData: true, // Set to true if you want to use real API calls
+        finnhubKey: '', // Will be populated if available
+        mockMode: true
+    };
 
     // ========== GAME STATE ==========
     let gameState = {

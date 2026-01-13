@@ -1,0 +1,52 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Build and Prepare API
+        run: |
+          # Create api directory
+          mkdir -p api
+          
+          # Read the template and replace {{API_KEY}} with actual secret
+          sed "s/'{{API_KEY}}'/'${{ secrets.FINNHUB_API_KEY }}'/" api-stock-template.js > api/stock.js
+          
+          # Update stock.html to include the API script
+          sed -i '/<script src="stock.js"><\/script>/i\    <script src="api/stock.js"><\/script>' stock.html
+          
+          # Ensure all links work in GitHub Pages
+          sed -i 's|href="/"|href="index.html"|g' stock.html
+          sed -i 's|href="index.html"|href="index.html"|g' *.html || true
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+  
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
