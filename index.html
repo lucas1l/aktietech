@@ -9,514 +9,323 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- SIDEBAR MENU -->
-    <div class="sidebar">
-        <!-- Logo Section -->
-        <div class="sidebar-logo">
-            <i class="fas fa-chart-line"></i>
-            <h2>Stock Trader <span class="logo-highlight">Pro</span></h2>
-        </div>
-        
-        <!-- Quick Stats -->
-        <div class="sidebar-stats">
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-wallet"></i>
-                </div>
-                <div class="stat-info">
-                    <div class="stat-label">Balance</div>
-                    <div class="stat-value" id="player-balance">$10,000.00</div>
-                </div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-chart-bar"></i>
-                </div>
-                <div class="stat-info">
-                    <div class="stat-label">Portfolio</div>
-                    <div class="stat-value" id="portfolio-value">$10,000.00</div>
-                </div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-trophy"></i>
-                </div>
-                <div class="stat-info">
-                    <div class="stat-label">Rank</div>
-                    <div class="stat-value" id="player-rank">#1</div>
-                </div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-level-up-alt"></i>
-                </div>
-                <div class="stat-info">
-                    <div class="stat-label">Level</div>
-                    <div class="stat-value" id="player-level">1</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Navigation Menu -->
-        <nav class="sidebar-nav">
-            <a href="#" class="nav-item active" data-page="market">
+    <!-- HEADER -->
+    <header>
+        <div class="header-top">
+            <div class="logo">
                 <i class="fas fa-chart-line"></i>
-                <span>Market</span>
-            </a>
-            <a href="#" class="nav-item" data-page="portfolio">
-                <i class="fas fa-briefcase"></i>
-                <span>Portfolio</span>
-            </a>
-            <a href="#" class="nav-item" data-page="trading">
-                <i class="fas fa-exchange-alt"></i>
-                <span>Trading</span>
-            </a>
-            <a href="#" class="nav-item" data-page="leaderboard">
-                <i class="fas fa-trophy"></i>
-                <span>Leaderboard</span>
-            </a>
-            <a href="#" class="nav-item" data-page="achievements">
-                <i class="fas fa-medal"></i>
-                <span>Achievements</span>
-            </a>
-            <a href="#" class="nav-item" data-page="news">
-                <i class="fas fa-newspaper"></i>
-                <span>News</span>
-            </a>
-        </nav>
-        
-        <!-- Bottom Actions -->
-        <div class="sidebar-bottom">
-            <button id="theme-toggle" class="sidebar-btn">
-                <i class="fas fa-moon"></i>
-                <span>Dark Mode</span>
+                <h1>Stock Trader <span class="logo-highlight">Pro</span></h1>
+            </div>
+            <div class="header-controls">
+                <button id="theme-toggle" class="theme-btn" title="Toggle dark mode">
+                    <i class="fas fa-moon"></i> Dark Mode
+                </button>
+                <button id="profile-btn" class="theme-btn" title="Your Profile">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- GAME DASHBOARD -->
+    <div class="game-dashboard">
+        <!-- Quick Stats Bar -->
+        <div class="quick-stats">
+            <div class="stat-item">
+                <span class="stat-label"><i class="fas fa-wallet"></i> Balance</span>
+                <span id="player-balance" class="stat-value">$10,000.00</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label"><i class="fas fa-chart-bar"></i> Portfolio</span>
+                <span id="portfolio-value" class="stat-value">$10,000.00</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label"><i class="fas fa-trophy"></i> Rank</span>
+                <span id="player-rank" class="stat-value">#1</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label"><i class="fas fa-level-up-alt"></i> Level</span>
+                <span id="player-level" class="stat-value">1</span>
+            </div>
+        </div>
+
+        <!-- Main Game Tabs -->
+        <div class="game-tabs">
+            <button class="game-tab active" data-tab="market">
+                <i class="fas fa-chart-line"></i> Market
             </button>
-            <button id="profile-btn" class="sidebar-btn">
-                <i class="fas fa-user"></i>
-                <span>Profile</span>
+            <button class="game-tab" data-tab="portfolio">
+                <i class="fas fa-briefcase"></i> Portfolio
+            </button>
+            <button class="game-tab" data-tab="trading">
+                <i class="fas fa-exchange-alt"></i> Trading
+            </button>
+            <button class="game-tab" data-tab="leaderboard">
+                <i class="fas fa-trophy"></i> Leaderboard
+            </button>
+            <button class="game-tab" data-tab="achievements">
+                <i class="fas fa-medal"></i> Achievements
             </button>
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <!-- Header with Menu Toggle -->
-        <header class="main-header">
-            <button id="menu-toggle" class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="header-title" id="page-title">
-                <h1><i class="fas fa-chart-line"></i> Stock Market</h1>
+    <!-- MARKET TAB (Default/Active) -->
+    <main class="tab-content active" id="market-tab">
+        <!-- SEARCH BAR -->
+        <div class="search-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input 
+                    type="text" 
+                    id="search" 
+                    placeholder="Search stocks (AAPL, TSLA, MSFT...)" 
+                    autocomplete="off"
+                >
             </div>
-            <div class="header-actions">
-                <div class="search-container">
-                    <div class="search-wrapper">
-                        <i class="fas fa-search"></i>
-                        <input 
-                            type="text" 
-                            id="search" 
-                            placeholder="Search stocks (AAPL, TSLA, MSFT...)" 
-                            autocomplete="off"
-                        >
-                    </div>
-                </div>
-            </div>
-        </header>
+            <div id="search-info"></div>
+        </div>
 
-        <!-- MARKET PAGE (Default) -->
-        <main class="page-content active" id="market-page">
-            <!-- LOADING -->
-            <div id="loading">
-                <div class="loader"></div>
-                <p>Loading stock data...</p>
-            </div>
+        <!-- LOADING -->
+        <div id="loading">
+            <div class="loader"></div>
+            <p>Loading stock data...</p>
+        </div>
 
-            <!-- STOCK TABLE -->
-            <div class="table-container">
-                <div class="table-header">
-                    <h3><i class="fas fa-table"></i> Live Market Prices</h3>
-                    <div class="table-info">
-                        <span id="stock-count">10</span> stocks • Updated: <span id="last-updated">--:--</span>
-                    </div>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th onclick="sortTable('symbol')">Symbol <i class="fas fa-sort"></i></th>
-                            <th onclick="sortTable('price')">Price <i class="fas fa-sort"></i></th>
-                            <th onclick="sortTable('change')">Change <i class="fas fa-sort"></i></th>
-                            <th onclick="sortTable('percent')">% <i class="fas fa-sort"></i></th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="stock-table">
-                        <!-- JavaScript adds rows here -->
-                    </tbody>
-                </table>
-            </div>
+        <!-- STOCK TABLE -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('symbol')">Symbol <i class="fas fa-sort"></i></th>
+                        <th onclick="sortTable('price')">Price <i class="fas fa-sort"></i></th>
+                        <th onclick="sortTable('change')">Change <i class="fas fa-sort"></i></th>
+                        <th onclick="sortTable('percent')">% <i class="fas fa-sort"></i></th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="stock-table">
+                    <!-- JavaScript adds rows here -->
+                </tbody>
+            </table>
+        </div>
 
-            <!-- QUICK STATS -->
-            <div class="quick-stats-grid">
-                <div class="quick-stat-card">
-                    <div class="quick-stat-icon" style="background: rgba(37, 99, 235, 0.1); color: #2563eb;">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="quick-stat-info">
-                        <div class="quick-stat-label">Best Performer</div>
-                        <div class="quick-stat-value" id="best-performer">AAPL (+2.5%)</div>
-                    </div>
-                </div>
-                <div class="quick-stat-card">
-                    <div class="quick-stat-icon" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="quick-stat-info">
-                        <div class="quick-stat-label">Worst Performer</div>
-                        <div class="quick-stat-value" id="worst-performer">INTC (-1.8%)</div>
-                    </div>
-                </div>
-                <div class="quick-stat-card">
-                    <div class="quick-stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
-                        <i class="fas fa-volume-up"></i>
-                    </div>
-                    <div class="quick-stat-info">
-                        <div class="quick-stat-label">Most Active</div>
-                        <div class="quick-stat-value" id="most-active">TSLA</div>
-                    </div>
-                </div>
+        <!-- NEWS TICKER -->
+        <div class="news-ticker">
+            <div class="ticker-label">
+                <i class="fas fa-bullhorn"></i> Market News
             </div>
-        </main>
-
-        <!-- PORTFOLIO PAGE -->
-        <main class="page-content" id="portfolio-page">
-            <div class="page-header">
-                <h2><i class="fas fa-briefcase"></i> Your Portfolio</h2>
-                <p class="page-subtitle">Track your investments and trading history</p>
+            <div class="ticker-content">
+                <span id="news-ticker-text">Loading market news...</span>
             </div>
+        </div>
+    </main>
 
-            <div class="portfolio-summary-cards">
-                <div class="summary-card large">
-                    <div class="summary-content">
-                        <div class="summary-label">Total Portfolio Value</div>
-                        <div class="summary-value" id="portfolio-total">$10,000.00</div>
-                        <div class="summary-change up" id="portfolio-daily-change">+$0.00 (0.0%) today</div>
-                    </div>
-                    <div class="summary-icon">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                </div>
-                
+    <!-- PORTFOLIO TAB -->
+    <main class="tab-content" id="portfolio-tab">
+        <div class="portfolio-header">
+            <h2><i class="fas fa-briefcase"></i> Your Portfolio</h2>
+            <div class="portfolio-summary">
                 <div class="summary-card">
-                    <div class="summary-content">
-                        <div class="summary-label">Available Cash</div>
-                        <div class="summary-value" id="portfolio-cash">$10,000.00</div>
-                    </div>
-                    <div class="summary-icon">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
+                    <div class="summary-label">Total Value</div>
+                    <div class="summary-value" id="portfolio-total">$10,000.00</div>
                 </div>
-                
                 <div class="summary-card">
-                    <div class="summary-content">
-                        <div class="summary-label">Total Profit</div>
-                        <div class="summary-value" id="portfolio-profit">$0.00</div>
-                        <div class="summary-change" id="portfolio-profit-percent">0.0%</div>
-                    </div>
-                    <div class="summary-icon">
-                        <i class="fas fa-hand-holding-usd"></i>
-                    </div>
+                    <div class="summary-label">Today's P/L</div>
+                    <div class="summary-value up" id="portfolio-daily">+$0.00</div>
                 </div>
-                
                 <div class="summary-card">
-                    <div class="summary-content">
-                        <div class="summary-label">Total Trades</div>
-                        <div class="summary-value" id="portfolio-trades">0</div>
-                    </div>
-                    <div class="summary-icon">
-                        <i class="fas fa-exchange-alt"></i>
+                    <div class="summary-label">Total Profit</div>
+                    <div class="summary-value" id="portfolio-profit">$0.00</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Total Trades</div>
+                    <div class="summary-value" id="portfolio-trades">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-content">
+            <div class="holdings-container">
+                <h3><i class="fas fa-boxes"></i> Current Holdings</h3>
+                <div class="holdings-grid" id="holdings-list">
+                    <!-- Holdings will be populated by JavaScript -->
+                    <div class="empty-portfolio">
+                        <i class="fas fa-chart-pie fa-3x"></i>
+                        <p>No holdings yet</p>
+                        <p class="small">Buy stocks to build your portfolio!</p>
                     </div>
                 </div>
             </div>
 
-            <div class="portfolio-sections">
-                <div class="holdings-section">
-                    <div class="section-header">
-                        <h3><i class="fas fa-boxes"></i> Current Holdings</h3>
-                        <span class="section-count" id="holdings-count">0 stocks</span>
-                    </div>
-                    <div class="holdings-container" id="holdings-list">
-                        <!-- Holdings will be populated by JavaScript -->
-                        <div class="empty-state">
-                            <i class="fas fa-chart-pie fa-3x"></i>
-                            <h4>No holdings yet</h4>
-                            <p>Buy stocks to build your portfolio!</p>
-                            <button class="action-btn" onclick="switchToMarket()">
-                                <i class="fas fa-shopping-cart"></i> Browse Market
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="trades-section">
-                    <div class="section-header">
-                        <h3><i class="fas fa-history"></i> Recent Trades</h3>
-                        <a href="#" class="view-all">View All</a>
-                    </div>
-                    <div class="trades-container" id="recent-trades">
-                        <!-- Trades will be populated by JavaScript -->
-                        <div class="empty-state">
-                            <i class="fas fa-exchange-alt fa-2x"></i>
-                            <h4>No trades yet</h4>
-                            <p>Make your first trade to get started!</p>
-                        </div>
+            <div class="recent-trades">
+                <h3><i class="fas fa-history"></i> Recent Trades</h3>
+                <div class="trades-list" id="recent-trades">
+                    <!-- Trades will be populated by JavaScript -->
+                    <div class="empty-trades">
+                        <i class="fas fa-exchange-alt fa-2x"></i>
+                        <p>No trades yet</p>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
+    </main>
 
-        <!-- TRADING PAGE -->
-        <main class="page-content" id="trading-page">
-            <div class="page-header">
+    <!-- TRADING TAB -->
+    <main class="tab-content" id="trading-tab">
+        <div class="trading-container">
+            <div class="trading-header">
                 <h2><i class="fas fa-exchange-alt"></i> Trade Stocks</h2>
-                <p class="page-subtitle">Buy and sell stocks in real-time</p>
-            </div>
-
-            <div class="trading-container">
-                <div class="trading-left">
-                    <div class="selected-stock-card" id="selected-stock-display">
-                        <div class="no-stock-selected">
-                            <i class="fas fa-search fa-3x"></i>
-                            <h4>No stock selected</h4>
-                            <p>Select a stock from the market to start trading</p>
-                            <button class="action-btn" onclick="switchToMarket()">
-                                <i class="fas fa-chart-line"></i> View Market
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="quick-trades">
-                        <h4><i class="fas fa-bolt"></i> Quick Actions</h4>
-                        <div class="quick-trade-buttons">
-                            <button class="quick-trade-btn" onclick="quickTrade('AAPL', 'buy', 5)">
-                                <i class="fas fa-shopping-cart"></i>
-                                <span>Buy 5 AAPL</span>
-                            </button>
-                            <button class="quick-trade-btn" onclick="quickTrade('TSLA', 'buy', 3)">
-                                <i class="fas fa-shopping-cart"></i>
-                                <span>Buy 3 TSLA</span>
-                            </button>
-                            <button class="quick-trade-btn" onclick="quickTrade('MSFT', 'buy', 2)">
-                                <i class="fas fa-shopping-cart"></i>
-                                <span>Buy 2 MSFT</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="trading-right">
-                    <div class="trading-panel">
-                        <div class="trade-type-selector">
-                            <button class="trade-type-btn active" data-type="buy">
-                                <i class="fas fa-shopping-cart"></i>
-                                <span>Buy</span>
-                            </button>
-                            <button class="trade-type-btn" data-type="sell">
-                                <i class="fas fa-money-bill-wave"></i>
-                                <span>Sell</span>
-                            </button>
-                        </div>
-                        
-                        <div class="trade-form">
-                            <div class="form-group">
-                                <label for="trade-symbol">Stock Symbol</label>
-                                <div class="input-with-icon">
-                                    <i class="fas fa-chart-line"></i>
-                                    <input type="text" id="trade-symbol" value="AAPL" readonly>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="trade-quantity">Quantity</label>
-                                <div class="quantity-selector">
-                                    <button class="qty-btn minus">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <input type="number" id="trade-quantity" value="1" min="1" max="1000">
-                                    <button class="qty-btn plus">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div class="price-display">
-                                <div class="price-info">
-                                    <span class="price-label">Current Price:</span>
-                                    <span class="price-value" id="trade-price">$182.50</span>
-                                </div>
-                                <div class="price-info">
-                                    <span class="price-label">Estimated Cost:</span>
-                                    <span class="price-value" id="trade-estimate">$187.49</span>
-                                </div>
-                            </div>
-                            
-                            <div class="trade-summary">
-                                <div class="summary-item">
-                                    <span>Shares:</span>
-                                    <span id="trade-shares">1</span>
-                                </div>
-                                <div class="summary-item">
-                                    <span>Price per share:</span>
-                                    <span id="trade-price-per-share">$182.50</span>
-                                </div>
-                                <div class="summary-item">
-                                    <span>Subtotal:</span>
-                                    <span id="trade-subtotal">$182.50</span>
-                                </div>
-                                <div class="summary-item">
-                                    <span>Transaction Fee:</span>
-                                    <span id="trade-fee">$4.99</span>
-                                </div>
-                                <div class="summary-item total">
-                                    <strong>Total Cost:</strong>
-                                    <strong id="trade-total">$187.49</strong>
-                                </div>
-                            </div>
-                            
-                            <button id="execute-trade" class="trade-btn" disabled>
-                                <i class="fas fa-play-circle"></i>
-                                <span>Execute Trade</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="trade-info">
-                        <h4><i class="fas fa-info-circle"></i> Trade Information</h4>
-                        <ul>
-                            <li>Transaction fee: $4.99 per trade</li>
-                            <li>Market orders execute immediately</li>
-                            <li>Trading hours: 9:30 AM - 4:00 PM EST</li>
-                            <li>Real-time price updates</li>
-                        </ul>
-                    </div>
+                <div class="trading-info">
+                    <p>Select a stock from the market tab to start trading</p>
                 </div>
             </div>
-        </main>
 
-        <!-- LEADERBOARD PAGE -->
-        <main class="page-content" id="leaderboard-page">
-            <div class="page-header">
+            <div class="trading-panel">
+                <div class="selected-stock" id="selected-stock-display">
+                    <div class="no-stock-selected">
+                        <i class="fas fa-search fa-3x"></i>
+                        <p>No stock selected</p>
+                        <p class="small">Click on a stock in the Market tab to select it</p>
+                    </div>
+                </div>
+
+                <div class="trading-controls">
+                    <div class="trade-type">
+                        <button class="trade-type-btn active" data-type="buy">
+                            <i class="fas fa-shopping-cart"></i> Buy
+                        </button>
+                        <button class="trade-type-btn" data-type="sell">
+                            <i class="fas fa-money-bill-wave"></i> Sell
+                        </button>
+                    </div>
+
+                    <div class="quantity-selector">
+                        <label for="trade-quantity">Quantity:</label>
+                        <div class="quantity-controls">
+                            <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                            <input type="number" id="trade-quantity" value="1" min="1" max="1000">
+                            <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="trade-summary">
+                        <div class="summary-row">
+                            <span>Price per share:</span>
+                            <span id="trade-price">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Quantity:</span>
+                            <span id="trade-qty-display">1</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="trade-subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Fee:</span>
+                            <span id="trade-fee">$4.99</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="trade-total">$4.99</span>
+                        </div>
+                    </div>
+
+                    <button id="execute-trade" class="trade-btn" disabled>
+                        <i class="fas fa-play-circle"></i> Execute Trade
+                    </button>
+                </div>
+            </div>
+
+            <div class="trading-history">
+                <h3><i class="fas fa-clock"></i> Quick Trade History</h3>
+                <div id="quick-trade-history">
+                    <!-- Will show last few trades -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- LEADERBOARD TAB -->
+    <main class="tab-content" id="leaderboard-tab">
+        <div class="leaderboard-container">
+            <div class="leaderboard-header">
                 <h2><i class="fas fa-trophy"></i> Global Leaderboard</h2>
-                <p class="page-subtitle">Compete with traders worldwide</p>
+                <div class="leaderboard-filters">
+                    <button class="filter-btn active">All Time</button>
+                    <button class="filter-btn">This Week</button>
+                    <button class="filter-btn">Today</button>
+                </div>
             </div>
 
-            <div class="leaderboard-filters">
-                <button class="filter-btn active">All Time</button>
-                <button class="filter-btn">This Week</button>
-                <button class="filter-btn">Today</button>
-            </div>
-
-            <div class="podium-container">
-                <div class="podium second">
-                    <div class="podium-rank">2</div>
-                    <div class="podium-avatar">👨‍💼</div>
-                    <div class="podium-info">
+            <div class="leaderboard-content">
+                <div class="top-three">
+                    <div class="podium second">
+                        <div class="podium-rank">2</div>
                         <div class="podium-name">StockGuru</div>
                         <div class="podium-value">$11,500</div>
                     </div>
-                </div>
-                
-                <div class="podium first">
-                    <div class="podium-rank">1</div>
-                    <div class="podium-avatar">🦸</div>
-                    <div class="podium-info">
+                    <div class="podium first">
+                        <div class="podium-rank">1</div>
                         <div class="podium-name">WallStreetWolf</div>
                         <div class="podium-value">$12,800</div>
                     </div>
-                </div>
-                
-                <div class="podium third">
-                    <div class="podium-rank">3</div>
-                    <div class="podium-avatar">🧙</div>
-                    <div class="podium-info">
+                    <div class="podium third">
+                        <div class="podium-rank">3</div>
                         <div class="podium-name">BullMarket</div>
                         <div class="podium-value">$10,900</div>
                     </div>
                 </div>
-            </div>
 
-            <div class="leaderboard-list">
-                <div class="list-header">
-                    <span>Rank</span>
-                    <span>Trader</span>
-                    <span>Portfolio Value</span>
-                    <span>Today's Change</span>
+                <div class="leaderboard-list" id="leaderboard-table">
+                    <!-- Leaderboard entries will be populated by JavaScript -->
                 </div>
-                <div class="list-items" id="leaderboard-items">
-                    <!-- Leaderboard items will be populated by JavaScript -->
-                </div>
-            </div>
-            
-            <div class="your-position-card">
-                <div class="position-header">
-                    <h4><i class="fas fa-user"></i> Your Position</h4>
-                    <div class="position-rank">#<span id="your-rank">1</span></div>
-                </div>
-                <div class="position-info">
-                    <div class="position-name">You (${gameState?.player?.name || 'Trader'})</div>
-                    <div class="position-value">$<span id="your-value">10,000</span></div>
-                </div>
-                <div class="position-change up">
-                    <i class="fas fa-arrow-up"></i>
-                    <span id="your-change">+0.0%</span>
-                </div>
-            </div>
-        </main>
 
-        <!-- ACHIEVEMENTS PAGE -->
-        <main class="page-content" id="achievements-page">
-            <div class="page-header">
+                <div class="your-position">
+                    <h3><i class="fas fa-user"></i> Your Position</h3>
+                    <div class="position-card">
+                        <div class="position-rank">#<span id="your-rank">1</span></div>
+                        <div class="position-info">
+                            <div class="position-name">You</div>
+                            <div class="position-value">$<span id="your-value">10,000</span></div>
+                        </div>
+                        <div class="position-change">
+                            <span class="up"><i class="fas fa-arrow-up"></i> +0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ACHIEVEMENTS TAB -->
+    <main class="tab-content" id="achievements-tab">
+        <div class="achievements-container">
+            <div class="achievements-header">
                 <h2><i class="fas fa-medal"></i> Achievements</h2>
-                <p class="page-subtitle">Complete challenges and earn rewards</p>
-            </div>
-
-            <div class="achievements-summary">
-                <div class="achievement-summary-card">
-                    <div class="summary-content">
+                <div class="achievements-summary">
+                    <div class="summary-card">
+                        <div class="summary-label">Unlocked</div>
+                        <div class="summary-value" id="achievements-unlocked">1/12</div>
+                    </div>
+                    <div class="summary-card">
                         <div class="summary-label">Total XP</div>
                         <div class="summary-value" id="total-xp">50</div>
                     </div>
-                    <div class="summary-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                
-                <div class="achievement-summary-card">
-                    <div class="summary-content">
+                    <div class="summary-card">
                         <div class="summary-label">Level</div>
                         <div class="summary-value" id="achievements-level">1</div>
-                    </div>
-                    <div class="summary-icon">
-                        <i class="fas fa-level-up-alt"></i>
-                    </div>
-                </div>
-                
-                <div class="achievement-summary-card">
-                    <div class="summary-content">
-                        <div class="summary-label">Achievements Unlocked</div>
-                        <div class="summary-value" id="achievements-unlocked">1/12</div>
-                    </div>
-                    <div class="summary-icon">
-                        <i class="fas fa-medal"></i>
                     </div>
                 </div>
             </div>
 
-            <div class="xp-progress-section">
-                <h4><i class="fas fa-chart-line"></i> Progress to Next Level</h4>
-                <div class="xp-progress">
+            <div class="achievements-grid" id="achievements-list">
+                <!-- Achievements will be populated by JavaScript -->
+            </div>
+
+            <div class="xp-progress">
+                <h3><i class="fas fa-chart-line"></i> Progress to Next Level</h3>
+                <div class="xp-bar-container">
                     <div class="xp-bar">
                         <div class="xp-fill" id="xp-fill" style="width: 10%"></div>
                     </div>
@@ -525,83 +334,46 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </main>
 
-            <div class="achievements-grid" id="achievements-list">
-                <!-- Achievements will be populated by JavaScript -->
-            </div>
-        </main>
+    <!-- DETAILS PANEL -->
+    <div id="details-panel" class="details-panel">
+        <div class="panel-header">
+            <h2 id="panel-title">Stock Details</h2>
+            <button id="close-panel" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="panel-content">
+            <!-- Content will be populated by JavaScript -->
+        </div>
+    </div>
 
-        <!-- NEWS PAGE -->
-        <main class="page-content" id="news-page">
-            <div class="page-header">
-                <h2><i class="fas fa-newspaper"></i> Market News</h2>
-                <p class="page-subtitle">Latest financial news and updates</p>
-            </div>
-
-            <div class="news-container">
-                <div class="news-filters">
-                    <button class="news-filter-btn active">All News</button>
-                    <button class="news-filter-btn">Technology</button>
-                    <button class="news-filter-btn">Finance</button>
-                    <button class="news-filter-btn">Market Trends</button>
-                </div>
-
-                <div class="news-list" id="news-list">
-                    <!-- News items will be populated by JavaScript -->
-                    <div class="news-item">
-                        <div class="news-image">
-                            <i class="fas fa-chart-line fa-2x"></i>
-                        </div>
-                        <div class="news-content">
-                            <h4>Stock Market Hits Record High</h4>
-                            <p>The stock market reached new heights today as investor confidence grows. Major tech stocks led the rally with gains across the board.</p>
-                            <div class="news-meta">
-                                <span class="news-category">Market Trends</span>
-                                <span class="news-time">2 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- DETAILS PANEL -->
-        <div id="details-panel" class="details-panel">
-            <div class="panel-header">
-                <h2 id="panel-title">Stock Details</h2>
-                <button id="close-panel" class="close-btn">
+    <!-- PROFILE MODAL -->
+    <div id="profile-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user"></i> Your Profile</h3>
+                <button class="close-modal-btn close-btn">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="panel-content">
-                <!-- Content will be populated by JavaScript -->
+            <div class="modal-body" id="profile-content">
+                <!-- Profile content will be populated by JavaScript -->
             </div>
         </div>
-
-        <!-- PROFILE MODAL -->
-        <div id="profile-modal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3><i class="fas fa-user"></i> Your Profile</h3>
-                    <button class="close-modal-btn close-btn">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="modal-body" id="profile-content">
-                    <!-- Profile content will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
-
-        <!-- FOOTER -->
-        <footer class="footer">
-            <p><i class="fas fa-info-circle"></i> Stock Trader Pro - Virtual Trading Game</p>
-            <p class="small">Data updates every 30 seconds • Last updated: <span id="footer-updated">--:--</span></p>
-        </footer>
-
-        <!-- OVERLAY -->
-        <div id="overlay" class="overlay"></div>
     </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p><i class="fas fa-info-circle"></i> Stock Trader Pro - Virtual Trading Game</p>
+        <p class="small">Data updates every 30 seconds • <span id="last-updated">--:--</span></p>
+    </footer>
+
+    <!-- OVERLAY -->
+    <div id="overlay" class="overlay"></div>
 
     <script src="script.js"></script>
 </body>
